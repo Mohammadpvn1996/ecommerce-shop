@@ -21,7 +21,6 @@ import {
   setFiltersFromUrl,
 } from "@/lib/features/filters/filtersSlice";
 import { getFiltersFromUrl, buildUrlFromFilters } from "@/lib/utils/url-params";
-import { log } from "node:console";
 import { debounce } from "lodash";
 
 const { Option } = Select;
@@ -86,7 +85,6 @@ export default function ProductsPage() {
       searchTerm,
     });
 
-   
     router.replace(url ? `/?${url}` : "/", { scroll: false });
   }, [router, page, pageSize, selectedCategory, sortBy, searchTerm]);
 
@@ -112,7 +110,6 @@ export default function ProductsPage() {
     dispatch(setSelectedCategory(null));
     debouncedHandleSearch(search);
   }, [search]);
-
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -170,10 +167,9 @@ export default function ProductsPage() {
             </div>
           ) : error ? (
             <Alert message="Error" description={error} type="error" showIcon />
-          ) : (
+          ) : products.length > 0 ? (
             <>
               <ProductList products={products} />
-
               <div className="mt-8 flex justify-center">
                 <Pagination
                   current={page}
@@ -185,6 +181,10 @@ export default function ProductsPage() {
                 />
               </div>
             </>
+          ) : (
+            <div className="flex justify-center items-center h-64">
+              <p className="text-gray-700">No products found</p>
+            </div>
           )}
         </div>
       </div>
