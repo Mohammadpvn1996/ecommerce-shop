@@ -5,10 +5,11 @@ import { Form, Button, List, Input, Rate } from "antd"
 import { Comment } from "@ant-design/compatible"
 import { UserOutlined } from "@ant-design/icons"
 import { Avatar } from "antd"
-import { useAppDispatch, useAppSelector } from "../lib/hooks"
+import {  useAppSelector } from "../lib/hooks"
 import { addReviewAsync, setProductReviews } from "../lib/features/reviews/reviewsSlice"
 import type { Review } from "../lib/types"
-
+import { useDispatch } from "react-redux"
+import { AppDispatch } from "@/lib/store"
 const { TextArea } = Input
 
 interface ProductCommentsProps {
@@ -16,10 +17,13 @@ interface ProductCommentsProps {
   reviews: Review[]
 }
 
-export default function ProductComments({ productId, reviews = [] }: ProductCommentsProps) {
-  const dispatch = useAppDispatch()
-  const storeReviews = useAppSelector((state) => state.reviews.items[productId] || [])
-  const isLoading = useAppSelector((state) => state.reviews.loading)
+export default function ProductComments({
+  productId,
+  reviews = [],
+}: ProductCommentsProps) {
+  const dispatch = useDispatch<AppDispatch>();
+  const storeReviews = useAppSelector((state) => state.reviews.items[productId] || []);
+  const isLoading = useAppSelector((state) => state.reviews.loading);
 
   const [value, setValue] = useState("")
   const [rating, setRating] = useState(5)

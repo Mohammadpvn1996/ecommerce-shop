@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/header";
 import { store } from "@/lib/store";
 import { Provider as ReduxProvider } from "react-redux";
+import { Providers } from "@/lib/providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -20,10 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ReduxProvider store={store}>
-          <Header />
+        <Providers> 
           {children}
-        </ReduxProvider>
+        </Providers>
       </body>
     </html>
   );

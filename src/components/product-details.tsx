@@ -1,35 +1,58 @@
-"use client"
+"use client";
 
-import { useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Spin, Rate, Tabs, Button, Divider, Image as AntImage, Tag, Alert } from "antd"
-import { ShoppingCartOutlined, HeartOutlined, ShareAltOutlined, ArrowLeftOutlined } from "@ant-design/icons"
-import { useAppDispatch, useAppSelector } from "../lib/hooks"
-import { fetchProductByIdAsync, clearSelectedProduct } from "../lib/features/products/productsSlice"
-import { addToCart } from "../lib/features/cart/cartSlice"
-import ProductComments from "./product-comments"
+import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  Spin,
+  Rate,
+  Tabs,
+  Button,
+  Divider,
+  Image as AntImage,
+  Tag,
+  Alert,
+} from "antd";
+import {
+  ShoppingCartOutlined,
+  HeartOutlined,
+  ShareAltOutlined,
+  ArrowLeftOutlined,
+} from "@ant-design/icons";
+import { useAppSelector } from "../lib/hooks";
+import {
+  fetchProductByIdAsync,
+  clearSelectedProduct,
+} from "../lib/features/products/productsSlice";
+import { addToCart } from "../lib/features/cart/cartSlice";
+import ProductComments from "./product-comments";
+import { AppDispatch } from "@/lib/store";
+import { useDispatch } from "react-redux";
 
 interface ProductDetailsProps {
-  productId: string
+  productId: string;
 }
 
 export default function ProductDetails({ productId }: ProductDetailsProps) {
-  const dispatch = useAppDispatch()
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const { selectedProduct: product, loading, error } = useAppSelector((state) => state.products)
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const {
+    selectedProduct: product,
+    loading,
+    error,
+  } = useAppSelector((state) => state.products);
 
   // Get the category from URL if present
-  const categoryFromUrl = searchParams.get("category")
+  const categoryFromUrl = searchParams.get("category");
 
   useEffect(() => {
-    dispatch(fetchProductByIdAsync(productId))
+    dispatch(fetchProductByIdAsync(productId));
 
     // Clean up when component unmounts
     return () => {
-      dispatch(clearSelectedProduct())
-    }
-  }, [dispatch, productId])
+      dispatch(clearSelectedProduct());
+    };
+  }, [dispatch, productId]);
 
   const handleAddToCart = () => {
     if (product) {
@@ -40,39 +63,48 @@ export default function ProductDetails({ productId }: ProductDetailsProps) {
           price: product.price,
           thumbnail: product.thumbnail,
           quantity: 1,
-        }),
-      )
+        })
+      );
     }
-  }
+  };
 
   const handleBackClick = () => {
     // Navigate back to products page with the category filter preserved
     if (categoryFromUrl) {
-      router.push(`/?category=${categoryFromUrl}`)
+      router.push(`/?category=${categoryFromUrl}`);
     } else {
-      router.push("/")
+      router.push("/");
     }
-  }
+  };
 
   if (loading) {
     return (
       <div className="flex justify-center items-center h-96">
         <Spin size="large" />
       </div>
-    )
+    );
   }
 
   if (error || !product) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <Alert message="Error" description={error || "Product not found"} type="error" showIcon />
+        <Alert
+          message="Error"
+          description={error || "Product not found"}
+          type="error"
+          showIcon
+        />
       </div>
-    )
+    );
   }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <Button icon={<ArrowLeftOutlined />} onClick={handleBackClick} className="mb-6">
+      <Button
+        icon={<ArrowLeftOutlined />}
+        onClick={handleBackClick}
+        className="mb-6"
+      >
         Back to Products
       </Button>
 
@@ -90,7 +122,7 @@ export default function ProductDetails({ productId }: ProductDetailsProps) {
             </div>
 
             <div className="grid grid-cols-5 gap-2">
-              {product.images.map((image:any, index:number) => (
+              {product.images.map((image: any, index: number) => (
                 <AntImage
                   key={index}
                   src={image}
@@ -119,10 +151,15 @@ export default function ProductDetails({ productId }: ProductDetailsProps) {
             <p className="text-gray-700 mb-6">{product.description}</p>
 
             <div className="flex items-baseline mb-6">
-              <span className="text-3xl font-bold text-blue-600 mr-4">${product.price}</span>
+              <span className="text-3xl font-bold text-blue-600 mr-4">
+                ${product.price}
+              </span>
               {product.discountPercentage > 0 && (
                 <span className="text-lg text-gray-500 line-through">
-                  ${Math.round(product.price / (1 - product.discountPercentage / 100))}
+                  $
+                  {Math.round(
+                    product.price / (1 - product.discountPercentage / 100)
+                  )}
                 </span>
               )}
             </div>
@@ -132,7 +169,12 @@ export default function ProductDetails({ productId }: ProductDetailsProps) {
             </div>
 
             <div className="flex space-x-4">
-              <Button type="primary" size="large" icon={<ShoppingCartOutlined />} onClick={handleAddToCart}>
+              <Button
+                type="primary"
+                size="large"
+                icon={<ShoppingCartOutlined />}
+                onClick={handleAddToCart}
+              >
                 Add to Cart
               </Button>
               <Button size="large" icon={<HeartOutlined />}>
@@ -155,10 +197,14 @@ export default function ProductDetails({ productId }: ProductDetailsProps) {
               label: "Description",
               children: (
                 <div className="p-6">
-                  <h2 className="text-xl font-semibold mb-4">Product Description</h2>
+                  <h2 className="text-xl font-semibold mb-4">
+                    Product Description
+                  </h2>
                   <p className="text-gray-700">{product.description}</p>
 
-                  <h3 className="text-lg font-semibold mt-6 mb-3">Specifications</h3>
+                  <h3 className="text-lg font-semibold mt-6 mb-3">
+                    Specifications
+                  </h3>
                   <ul className="list-disc pl-5 text-gray-700">
                     <li>Brand: {product.brand}</li>
                     <li>Category: {product.category}</li>
@@ -173,7 +219,10 @@ export default function ProductDetails({ productId }: ProductDetailsProps) {
               label: "Reviews",
               children: (
                 <div className="p-6">
-                  <ProductComments productId={productId} reviews={product.reviews || []} />
+                  <ProductComments
+                    productId={productId}
+                    reviews={product.reviews || []}
+                  />
                 </div>
               ),
             },
@@ -181,5 +230,5 @@ export default function ProductDetails({ productId }: ProductDetailsProps) {
         />
       </div>
     </div>
-  )
+  );
 }

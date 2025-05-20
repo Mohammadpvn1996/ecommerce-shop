@@ -6,7 +6,7 @@ import { Select, Pagination, Spin, Alert, Input, Divider } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import ProductList from "./product-list";
 import CategoryFilter from "./category-filter";
-import { useAppDispatch, useAppSelector } from "../lib/hooks";
+import { useAppSelector } from "../lib/hooks";
 import {
   fetchProductsAsync,
   sortProducts,
@@ -25,12 +25,14 @@ import {
   buildUrlFromFilters,
 } from "../lib/utils/url-params";
 import { debounce } from "lodash";
-
+import Header from "./header";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/lib/store";
 const { Option } = Select;
 
 export default function ProductsPage() {
   const [search, setSearch] = useState("");
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -117,82 +119,90 @@ export default function ProductsPage() {
   }, [search]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Products</h1>
+    <>
+      <Header />
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-8">Products</h1>
 
-      <div className="flex flex-col md:flex-row gap-6 mb-8">
-        <div className="w-full md:w-1/4">
-          <div className="bg-white p-4 rounded shadow-sm">
-            <h2 className="text-lg font-semibold mb-4">Filters</h2>
+        <div className="flex flex-col md:flex-row gap-6 mb-8">
+          <div className="w-full md:w-1/4">
+            <div className="bg-white p-4 rounded shadow-sm">
+              <h2 className="text-lg font-semibold mb-4">Filters</h2>
 
-            <div className="mb-4">
-              <p className="mb-2 text-gray-700">Search</p>
-              <Input
-                placeholder="Search products"
-                prefix={<SearchOutlined />}
-                onChange={(e) => setSearch(e.target.value)}
-                value={search}
-                allowClear
-              />
-            </div>
-
-            <Divider className="my-4" />
-
-            <div className="mb-4">
-              <p className="mb-2 text-gray-700">Category</p>
-              <CategoryFilter
-                categories={categories}
-                selectedCategory={selectedCategory}
-                onChange={handleCategoryChange}
-              />
-            </div>
-
-            <Divider className="my-4" />
-
-            <div>
-              <p className="mb-2 text-gray-700">Sort By</p>
-              <Select
-                className="w-full"
-                value={sortBy}
-                onChange={handleSortChange}
-              >
-                <Option value="default">Default</Option>
-                <Option value="price-asc">Price: Low to High</Option>
-                <Option value="price-desc">Price: High to Low</Option>
-                <Option value="rating">Rating</Option>
-              </Select>
-            </div>
-          </div>
-        </div>
-
-        <div className="w-full md:w-3/4">
-          {loading ? (
-            <div className="flex justify-center items-center h-64">
-              <Spin size="large" />
-            </div>
-          ) : error ? (
-            <Alert message="Error" description={error} type="error" showIcon />
-          ) : products.length > 0 ? (
-            <>
-              <ProductList products={products} />
-              <div className="mt-8 flex justify-center">
-                <Pagination
-                  current={page}
-                  pageSize={pageSize}
-                  total={total}
-                  onChange={handlePageChange}
-                  showSizeChanger
-                  pageSizeOptions={["5", "10", "20", "50"]}
+              <div className="mb-4">
+                <p className="mb-2 text-gray-700">Search</p>
+                <Input
+                  placeholder="Search products"
+                  prefix={<SearchOutlined />}
+                  onChange={(e) => setSearch(e.target.value)}
+                  value={search}
+                  allowClear
                 />
               </div>
-            </>
-          ) : (
-            <div className="flex justify-center items-center h-64">
-              <p className="text-gray-700">No products found</p>
+
+              <Divider className="my-4" />
+
+              <div className="mb-4">
+                <p className="mb-2 text-gray-700">Category</p>
+                <CategoryFilter
+                  categories={categories}
+                  selectedCategory={selectedCategory}
+                  onChange={handleCategoryChange}
+                />
+              </div>
+
+              <Divider className="my-4" />
+
+              <div>
+                <p className="mb-2 text-gray-700">Sort By</p>
+                <Select
+                  className="w-full"
+                  value={sortBy}
+                  onChange={handleSortChange}
+                >
+                  <Option value="default">Default</Option>
+                  <Option value="price-asc">Price: Low to High</Option>
+                  <Option value="price-desc">Price: High to Low</Option>
+                  <Option value="rating">Rating</Option>
+                </Select>
+              </div>
             </div>
-          )}
+          </div>
+
+          <div className="w-full md:w-3/4">
+            {loading ? (
+              <div className="flex justify-center items-center h-64">
+                <Spin size="large" />
+              </div>
+            ) : error ? (
+              <Alert
+                message="Error"
+                description={error}
+                type="error"
+                showIcon
+              />
+            ) : products.length > 0 ? (
+              <>
+                <ProductList products={products} />
+                <div className="mt-8 flex justify-center">
+                  <Pagination
+                    current={page}
+                    pageSize={pageSize}
+                    total={total}
+                    onChange={handlePageChange}
+                    showSizeChanger
+                    pageSizeOptions={["5", "10", "20", "50"]}
+                  />
+                </div>
+              </>
+            ) : (
+              <div className="flex justify-center items-center h-64">
+                <p className="text-gray-700">No products found</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

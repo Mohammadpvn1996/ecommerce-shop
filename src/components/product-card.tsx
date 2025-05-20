@@ -1,27 +1,29 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { Card, Rate, Badge, Button } from "antd"
-import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons"
-import Image from "next/image"
-import Link from "next/link"
-import { useAppDispatch, useAppSelector } from "../lib/hooks"
-import { addToCart } from "../lib/features/cart/cartSlice"
-import type { Product } from "../lib/types"
+import type React from "react";
+import { Card, Rate, Badge, Button } from "antd";
+import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons";
+import Image from "next/image";
+import Link from "next/link";
+import { useAppSelector } from "../lib/hooks";
+import { addToCart } from "../lib/features/cart/cartSlice";
+import type { Product } from "../lib/types";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/lib/store";
 
-const { Meta } = Card
+const { Meta } = Card;
 
 interface ProductCardProps {
-  product: Product
+  product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const dispatch = useAppDispatch()
-  const { selectedCategory } = useAppSelector((state) => state.filters)
+  const dispatch = useDispatch<AppDispatch>();
+  const { selectedCategory } = useAppSelector((state) => state.filters);
 
   const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
+    e.preventDefault();
+    e.stopPropagation();
     dispatch(
       addToCart({
         id: product.id,
@@ -29,19 +31,22 @@ export default function ProductCard({ product }: ProductCardProps) {
         price: product.price,
         thumbnail: product.thumbnail,
         quantity: 1,
-      }),
-    )
-  }
+      })
+    );
+  };
 
   const discountBadge =
     product.discountPercentage > 10 ? (
-      <Badge.Ribbon text={`${Math.round(product.discountPercentage)}% OFF`} color="red" />
-    ) : null
+      <Badge.Ribbon
+        text={`${Math.round(product.discountPercentage)}% OFF`}
+        color="red"
+      />
+    ) : null;
 
   // Build the URL with the current category preserved
   const productUrl = selectedCategory
     ? `/products/${product.id}?category=${selectedCategory}`
-    : `/products/${product.id}`
+    : `/products/${product.id}`;
 
   return (
     <Link href={productUrl}>
@@ -60,7 +65,12 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         }
         actions={[
-          <Button key="add-to-cart" type="text" icon={<ShoppingCartOutlined />} onClick={handleAddToCart} />,
+          <Button
+            key="add-to-cart"
+            type="text"
+            icon={<ShoppingCartOutlined />}
+            onClick={handleAddToCart}
+          />,
           <Button key="favorite" type="text" icon={<HeartOutlined />} />,
         ]}
       >
@@ -69,14 +79,23 @@ export default function ProductCard({ product }: ProductCardProps) {
           description={
             <div>
               <div className="flex justify-between items-center mb-2">
-                <span className="text-lg font-bold text-blue-600">${product.price}</span>
-                <Rate disabled defaultValue={product.rating} allowHalf className="text-xs" />
+                <span className="text-lg font-bold text-blue-600">
+                  ${product.price}
+                </span>
+                <Rate
+                  disabled
+                  defaultValue={product.rating}
+                  allowHalf
+                  className="text-xs"
+                />
               </div>
-              <p className="text-gray-500 text-sm line-clamp-2">{product.description}</p>
+              <p className="text-gray-500 text-sm line-clamp-2">
+                {product.description}
+              </p>
             </div>
           }
         />
       </Card>
     </Link>
-  )
+  );
 }

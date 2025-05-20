@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { configureStore } from "@reduxjs/toolkit"
-import cartReducer from "./features/cart/cartSlice"
-import productsReducer from "./features/products/productsSlice"
-import categoriesReducer from "./features/categories/categoriesSlice"
-import filtersReducer from "./features/filters/filtersSlice"
-import reviewsReducer from "./features/reviews/reviewsSlice"
+import { configureStore } from "@reduxjs/toolkit";
+import cartReducer from "./features/cart/cartSlice";
+import productsReducer from "./features/products/productsSlice";
+import categoriesReducer from "./features/categories/categoriesSlice";
+import filtersReducer from "./features/filters/filtersSlice";
+import reviewsReducer from "./features/reviews/reviewsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,7 +20,8 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     }),
-})
+});
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export default store;
