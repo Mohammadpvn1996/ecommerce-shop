@@ -57,6 +57,7 @@ export default function ProductsPage() {
 
   // Fetch products when filters change
   useEffect(() => {
+    console.log("fetching products");
     dispatch(
       fetchProductsAsync({
         limit: pageSize,
