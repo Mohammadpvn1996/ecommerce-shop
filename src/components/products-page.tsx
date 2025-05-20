@@ -6,12 +6,12 @@ import { Select, Pagination, Spin, Alert, Input, Divider } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import ProductList from "./product-list";
 import CategoryFilter from "./category-filter";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import {
   fetchProductsAsync,
   sortProducts,
-} from "@/lib/features/products/productsSlice";
-import { fetchCategoriesAsync } from "@/lib/features/categories/categoriesSlice";
+} from "../lib/features/products/productsSlice";
+import { fetchCategoriesAsync } from "../lib/features/categories/categoriesSlice";
 import {
   setPage,
   setPageSize,
@@ -19,8 +19,11 @@ import {
   setSortBy,
   setSearchTerm,
   setFiltersFromUrl,
-} from "@/lib/features/filters/filtersSlice";
-import { getFiltersFromUrl, buildUrlFromFilters } from "@/lib/utils/url-params";
+} from "../lib/features/filters/filtersSlice";
+import {
+  getFiltersFromUrl,
+  buildUrlFromFilters,
+} from "../lib/utils/url-params";
 import { debounce } from "lodash";
 
 const { Option } = Select;
@@ -38,6 +41,7 @@ export default function ProductsPage() {
     error,
     total,
   } = useAppSelector((state) => state.products);
+
   const { items: categories } = useAppSelector((state) => state.categories);
   const { page, pageSize, selectedCategory, sortBy, searchTerm } =
     useAppSelector((state) => state.filters);

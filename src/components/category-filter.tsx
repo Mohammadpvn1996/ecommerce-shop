@@ -1,7 +1,7 @@
 "use client";
 
 import { Radio, Space } from "antd";
-import type { Category } from "@/lib/types";
+import type { Category } from "../lib/types";
 
 interface CategoryFilterProps {
   categories: Category[];

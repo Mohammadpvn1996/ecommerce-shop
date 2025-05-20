@@ -1,8 +1,8 @@
 "use client"
 
 import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit"
-import { fetchCategories } from "@/lib/api"
-import type { Category } from "@/lib/types"
+import { fetchCategories } from "../../api"
+import type { Category } from "../../types"
 
 interface CategoriesState {
   items: Category[]

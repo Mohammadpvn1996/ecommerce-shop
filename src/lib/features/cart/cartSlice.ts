@@ -1,7 +1,7 @@
 "use client"
 
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
-import type { CartItem } from "@/lib/types"
+import type { CartItem } from "../../types"
 
 interface CartState {
   items: CartItem[]

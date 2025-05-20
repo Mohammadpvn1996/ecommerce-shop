@@ -1,8 +1,8 @@
 "use client"
 
 import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit"
-import { fetchProducts, fetchProductById } from "@/lib/api"
-import type { Product, ProductsResponse } from "@/lib/types"
+import { fetchProducts, fetchProductById } from "../../api"
+import type { Product, ProductsResponse } from "../../types"
 
 interface ProductsState {
   items: Product[]

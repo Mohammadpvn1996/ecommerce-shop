@@ -3,7 +3,8 @@
 import Link from "next/link"
 import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons"
 import { Badge, Button } from "antd"
-import { useAppSelector } from "@/lib/hooks"
+import { useAppSelector } from "../lib/hooks"
+
 
 export default function Header() {
   const cartItems = useAppSelector((state) => state.cart.items)

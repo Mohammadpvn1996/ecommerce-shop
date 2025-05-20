@@ -4,9 +4,9 @@ import { useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Spin, Rate, Tabs, Button, Divider, Image as AntImage, Tag, Alert } from "antd"
 import { ShoppingCartOutlined, HeartOutlined, ShareAltOutlined, ArrowLeftOutlined } from "@ant-design/icons"
-import { useAppDispatch, useAppSelector } from "@/lib/hooks"
-import { fetchProductByIdAsync, clearSelectedProduct } from "@/lib/features/products/productsSlice"
-import { addToCart } from "@/lib/features/cart/cartSlice"
+import { useAppDispatch, useAppSelector } from "../lib/hooks"
+import { fetchProductByIdAsync, clearSelectedProduct } from "../lib/features/products/productsSlice"
+import { addToCart } from "../lib/features/cart/cartSlice"
 import ProductComments from "./product-comments"
 
 interface ProductDetailsProps {
@@ -90,7 +90,7 @@ export default function ProductDetails({ productId }: ProductDetailsProps) {
             </div>
 
             <div className="grid grid-cols-5 gap-2">
-              {product.images.map((image, index) => (
+              {product.images.map((image:any, index:number) => (
                 <AntImage
                   key={index}
                   src={image}

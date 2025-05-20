@@ -5,9 +5,9 @@ import { Card, Rate, Badge, Button } from "antd"
 import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons"
 import Image from "next/image"
 import Link from "next/link"
-import { useAppDispatch, useAppSelector } from "@/lib/hooks"
-import { addToCart } from "@/lib/features/cart/cartSlice"
-import type { Product } from "@/lib/types"
+import { useAppDispatch, useAppSelector } from "../lib/hooks"
+import { addToCart } from "../lib/features/cart/cartSlice"
+import type { Product } from "../lib/types"
 
 const { Meta } = Card
 

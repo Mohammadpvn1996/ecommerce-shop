@@ -1,7 +1,7 @@
 "use client"
 
 import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit"
-import type { Review } from "@/lib/types"
+import type { Review } from "../../types"
 
 interface ReviewsState {
   items: Record<string, Review[]>

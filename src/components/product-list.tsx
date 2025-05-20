@@ -1,6 +1,6 @@
 import { Row, Col } from "antd"
 import ProductCard from "./product-card"
-import type { Product } from "@/lib/types"
+import type { Product } from "../lib/types"
 
 interface ProductListProps {
   products: Product[]

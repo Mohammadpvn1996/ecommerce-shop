@@ -5,9 +5,9 @@ import { Form, Button, List, Input, Rate } from "antd"
 import { Comment } from "@ant-design/compatible"
 import { UserOutlined } from "@ant-design/icons"
 import { Avatar } from "antd"
-import { useAppDispatch, useAppSelector } from "@/lib/hooks"
-import { addReviewAsync, setProductReviews } from "@/lib/features/reviews/reviewsSlice"
-import type { Review } from "@/lib/types"
+import { useAppDispatch, useAppSelector } from "../lib/hooks"
+import { addReviewAsync, setProductReviews } from "../lib/features/reviews/reviewsSlice"
+import type { Review } from "../lib/types"
 
 const { TextArea } = Input
 
