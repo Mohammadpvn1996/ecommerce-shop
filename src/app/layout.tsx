@@ -1,10 +1,11 @@
-"use client"
-import type React from "react"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import { Providers } from "@/lib/providers"
-import Header from "@/components/header"
-const inter = Inter({ subsets: ["latin"] })
+"use client";
+import type React from "react";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import Header from "@/components/header";
+import { store } from "@/lib/store";
+import { Provider as ReduxProvider } from "react-redux";
+const inter = Inter({ subsets: ["latin"] });
 
 // export const metadata = {
 //   title: "Salona App",
@@ -15,16 +16,16 @@ const inter = Inter({ subsets: ["latin"] })
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
+        <ReduxProvider store={store}>
           <Header />
           {children}
-        </Providers>
+        </ReduxProvider>
       </body>
     </html>
-  )
+  );
 }
